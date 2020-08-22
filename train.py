@@ -19,14 +19,14 @@ import os
 batch_size = 10
 base_lr = 0.001
 max_epoch = 200
-model_path = './checkpoints/model.pth'
+model_path = '/home/VerificationProject/checkpoints/model.pth'
 restor = False
 weight=200
 height=60
-trainPath='./data/train'
-testPath='./data/test'
-if not os.path.exists('./checkpoints'):
-    os.mkdir('./checkpoints')
+trainPath='/home/VerificationProject/data/train'
+testPath='/home/VerificationProject/data/test'
+if not os.path.exists('/home/VerificationProject/checkpoints'):
+    os.mkdir('/home/VerificationProject/checkpoints')
 
 def calculat_acc(output, target):
     output, target = output.view(-1, 36), target.view(-1, 36)
@@ -55,7 +55,7 @@ def train():
     if torch.cuda.is_available():
         cnn.cuda()
     if restor:
-        cnn.load_state_dict(torch.load(model_path))
+        cnn.load_state_dict(torch.load(model_path,map_location='cpu'))
 #        freezing_layers = list(cnn.named_parameters())[:10]
 #        for param in freezing_layers:
 #            param[1].requires_grad = False

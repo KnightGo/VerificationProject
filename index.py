@@ -6,10 +6,11 @@ from PIL import Image
 from io import BytesIO
 from models import CNN
 from torchvision.transforms import Compose, ToTensor, Resize
+from collections import OrderedDict
 # import matplotlib.pyplot as plot
 app = Flask(__name__)
  
-model_path = './checkpoints/model.pth'
+model_path = '/home/VerificationProject/checkpoints/model.pth'
 source = [str(i) for i in range(0, 10)]
 source += [chr(i) for i in range(97, 97+26)]
 alphabet = ''.join(source)
@@ -29,7 +30,7 @@ def post_predict():
     if torch.cuda.is_available():
         cnn = cnn.cuda()
     cnn.eval()
-    cnn.load_state_dict(torch.load(model_path))
+    cnn.load_state_dict(torch.load(model_path),map_location='cpu')
     img = img.view(1, 3, height, width).cuda()
     output = cnn(img)
     output = output.view(-1, 36)
