@@ -30,7 +30,7 @@ def post_predict():
     if torch.cuda.is_available():
         cnn = cnn.cuda()
     cnn.eval()
-    cnn.load_state_dict(torch.load(model_path),map_location='cpu')
+    cnn.load_state_dict(torch.load(model_path,map_location='cpu'))
     img = img.view(1, 3, height, width).cuda()
     output = cnn(img)
     output = output.view(-1, 36)
